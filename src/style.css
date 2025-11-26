@@ -1,22 +1,22 @@
 :root {
   /* Paleta Industrial: Azul, Cinza, Preto, Branco */
-  --bg-dark: #050505;       /* Fundo Geral: Preto Profundo */
-  --surface: #121212;       /* Cards/Nav: Cinza Quase Preto */
-  --surface-hover: #1e1e1e; /* Hover: Cinza Escuro */
-  --border: #2a2a2a;        /* Bordas: Cinza Médio */
+  --bg-dark: #050505;
+  --surface: #121212;
+  --surface-hover: #1e1e1e;
+  --border: #2a2a2a;
   
-  --primary: #2563eb;       /* Azul Royal (Ação Principal) */
-  --primary-dark: #1d4ed8;  /* Azul Escuro (Hover) */
-  --primary-light: #60a5fa; /* Azul Claro (Texto destaque) */
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-light: #60a5fa;
   
-  --danger: #dc2626;        /* Vermelho (Erro/Ação destrutiva) */
-  --success: #16a34a;       /* Verde (Sucesso/Concluído) */
-  --warning: #d97706;       /* Laranja (Atenção) */
+  --danger: #dc2626;
+  --success: #16a34a;
+  --warning: #d97706;
   
-  --text-main: #ffffff;     /* Branco Puro */
-  --text-muted: #a3a3a3;    /* Cinza Claro */
+  --text-main: #ffffff;
+  --text-muted: #a3a3a3;
   
-  --radius: 4px;            /* Bordas mais retas (Visual Industrial) */
+  --radius: 4px;
   --nav-width: 260px;
 }
 
@@ -28,6 +28,27 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  /* Garante que o conteúdo não fique "colado" nas bordas no celular */
+  overflow-x: hidden; 
+}
+
+/* --- TELA DE LOGIN (Correção de Responsividade e Desktop) --- */
+.login-page {
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center;     /* Centraliza horizontalmente */
+  padding: 1rem;
+}
+
+.login-box {
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  
+  width: 100%;       /* Ocupa largura total disponível... */
+  max-width: 400px;  /* ...MAS trava em 400px (não fica gigante no PC) */
+  margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
 /* Typography */
@@ -96,15 +117,33 @@ header {
   position: sticky;
   top: 0;
   z-index: 50;
+  height: 60px;
 }
 .hamburger { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
 
 nav {
-  position: fixed; top: 0; left: -100%; width: 85%; max-width: 300px; height: 100vh;
-  background: var(--surface); border-right: 1px solid var(--border);
-  transition: 0.3s; z-index: 100; padding: 2rem 1rem;
-  display: flex; flex-direction: column; gap: 0.5rem;
+  position: fixed; 
+  top: 0; 
+  left: -100%; 
+  width: 85%; 
+  max-width: 300px; 
+  
+  /* Usa dvh para ignorar a barra de navegação móvel */
+  height: 100dvh; 
+  
+  background: var(--surface); 
+  border-right: 1px solid var(--border);
+  transition: 0.3s; 
+  z-index: 100; 
+  padding: 2rem 1rem;
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.5rem;
+  
+  /* Permite rolar o menu se a tela for pequena na vertical */
+  overflow-y: auto; 
 }
+
 nav.active { left: 0; box-shadow: 10px 0 50px rgba(0,0,0,0.8); }
 nav a {
   padding: 12px; border-radius: var(--radius); display: flex; align-items: center; gap: 12px;
@@ -116,7 +155,14 @@ nav a.active-link { background: rgba(37, 99, 235, 0.15); color: var(--primary-li
 .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 90; opacity: 0; pointer-events: none; transition: 0.3s; }
 .overlay.active { opacity: 1; pointer-events: all; }
 
-main { padding: 1.5rem; flex: 1; max-width: 1200px; margin: 0 auto; width: 100%; }
+/* Main Content */
+main { 
+    padding: 1.5rem; 
+    flex: 1; 
+    width: 100%; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
 
 /* Cards */
 .card {
@@ -144,11 +190,15 @@ main { padding: 1.5rem; flex: 1; max-width: 1200px; margin: 0 auto; width: 100%;
   position: fixed; inset: 0; background: rgba(0,0,0,0.9);
   display: flex; align-items: center; justify-content: center;
   z-index: 200; opacity: 0; pointer-events: none; transition: 0.2s; backdrop-filter: blur(4px);
+  padding: 1rem;
 }
 .modal.active { opacity: 1; pointer-events: all; }
 .modal-content {
-  background: var(--surface); padding: 2rem; border-radius: var(--radius);
-  width: 95%; max-width: 600px; max-height: 90vh; overflow-y: auto;
+  background: var(--surface); padding: 1.5rem; border-radius: var(--radius);
+  width: 100%; 
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
   border: 1px solid var(--border);
 }
 
@@ -168,14 +218,34 @@ main { padding: 1.5rem; flex: 1; max-width: 1200px; margin: 0 auto; width: 100%;
 .desktop-table th { text-align: left; padding: 1rem; color: var(--text-muted); border-bottom: 1px solid var(--border); }
 .desktop-table td { padding: 1rem; border-bottom: 1px solid var(--border); }
 
+/* --- RESPONSIVIDADE DESKTOP --- */
 @media (min-width: 768px) {
-  body { padding-left: var(--nav-width); }
+  body { 
+    padding-left: var(--nav-width); 
+    display: block; 
+  }
+  
   header .hamburger { display: none; }
-  nav { left: 0; width: var(--nav-width); }
+  
+  nav { 
+    left: 0; 
+    width: var(--nav-width); 
+    height: 100vh; 
+    border-right: 1px solid var(--border);
+  }
+  
   .overlay { display: none; }
   .desktop-table { display: table; }
   .mobile-list { display: none; }
+  
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+  
+  /* CORREÇÃO DO LOGIN NO DESKTOP: */
+  /* Remove o padding lateral na tela de login para não ficar torto */
+  .login-page {
+    display: flex;
+    min-height: 100vh;
+    padding-left: 0; 
+  }
 }
-</style>
