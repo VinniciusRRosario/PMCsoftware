@@ -9,26 +9,27 @@ export async function checkSession() {
     const isLoginPage = path.includes('login.html');
 
     if (!session && !isLoginPage) {
-        // Se não tem sessão e não está no login -> Manda pro login
-        window.location.href = '/login.html';
+        // CORRIGIDO: Removida a barra '/' do início
+        window.location.href = 'login.html';
     } else if (session && isLoginPage) {
-        // Se tem sessão e tenta acessar login -> Manda pro dashboard
-        window.location.href = '/index.html';
+        // CORRIGIDO: Removida a barra '/' do início
+        window.location.href = 'index.html';
     }
     
     return session;
 }
 
 // Monitoramento em tempo real (Segurança Extra)
-// Se o usuário fizer logout em outra aba ou o token expirar, redireciona.
 supabase.auth.onAuthStateChange((event, session) => {
     const isLoginPage = window.location.pathname.includes('login.html');
 
     if (event === 'SIGNED_OUT' && !isLoginPage) {
-        window.location.href = '/login.html';
+        // CORRIGIDO: Removida a barra '/' do início
+        window.location.href = 'login.html';
     }
     if (event === 'SIGNED_IN' && isLoginPage) {
-        window.location.href = '/index.html';
+        // CORRIGIDO: Removida a barra '/' do início
+        window.location.href = 'index.html';
     }
 });
 
@@ -44,5 +45,6 @@ export async function login(email, password) {
 export async function logout() {
     const { error } = await supabase.auth.signOut();
     if (error) console.error('Erro ao sair:', error);
-    window.location.href = '/login.html';
+    // CORRIGIDO: Removida a barra '/' do início
+    window.location.href = 'login.html';
 }

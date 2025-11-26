@@ -327,7 +327,7 @@ async function initOrders() {
                  </div>` : '';
 
             return `
-            <div class="card flex" onclick="window.location.href='/order-details.html?id=${o.id}'" style="cursor:pointer; border-left: 4px solid var(--primary); align-items: stretch;">
+            <div class="card flex" onclick="window.location.href='order-details.html?id=${o.id}'" style="cursor:pointer; border-left: 4px solid var(--primary); align-items: stretch;">
                 ${checkboxHTML}
                 <div style="flex:1">
                     <div class="card-header">
@@ -533,7 +533,7 @@ async function setupNewOrderModal() {
 async function initOrderDetails() {
     const params = new URLSearchParams(window.location.search);
     const orderId = params.get('id');
-    if (!orderId) return window.location.href = '/orders.html';
+    if (!orderId) return window.location.href = 'orders.html';
 
     const headerEl = document.getElementById('order-header');
     const itemsEl = document.getElementById('order-items-detail');
