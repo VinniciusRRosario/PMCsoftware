@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ERP</title>
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="flex justify-between items-center">
+        <button id="hamburger" class="hamburger"><i data-lucide="menu"></i></button>
+        <h2>Dashboard</h2>
+        <div style="width:24px"></div> <!-- Spacer -->
+    </header>
+
+    <!-- Sidebar -->
+    <div id="overlay" class="overlay"></div>
+    <nav id="sidebar">
+        <h2 style="padding:0 1rem; margin-bottom:1rem">ERP Fábrica</h2>
+        <a href="index.html" class="active-link"><i data-lucide="layout-dashboard"></i> Visão Geral</a>
+        <a href="orders.html"><i data-lucide="clipboard-list"></i> Pedidos</a>
+        <a href="inventory.html"><i data-lucide="package"></i> Estoque</a>
+        <a href="clients.html"><i data-lucide="users"></i> Clientes</a>
+        <div style="flex:1"></div>
+        <a href="#" id="logoutBtn" class="text-danger"><i data-lucide="log-out"></i> Sair</a>
+    </nav>
+
+    <main>
+        <h1>Visão Geral</h1>
+        <p class="text-muted mb-4">Resumo da produção e financeiro.</p>
+        
+        <div id="dash-stats" class="grid-2">
+            <!-- Stats loaded via JS -->
+            <div class="card">
+                <h3>Carregando...</h3>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h3>Ações Rápidas</h3>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-primary w-full" onclick="window.location.href='orders.html'">
+                    <i data-lucide="plus-circle"></i> Novo Pedido
+                </button>
+                <button class="btn btn-outline w-full" onclick="window.location.href='inventory.html'">
+                    <i data-lucide="package-search"></i> Ver Estoque
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="./src/app.js"></script>
+</body>
+</html>

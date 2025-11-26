@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos - ERP</title>
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+    <header class="flex justify-between items-center">
+        <button id="hamburger" class="hamburger"><i data-lucide="menu"></i></button>
+        <h2>Pedidos</h2>
+        <button class="btn btn-primary btn-sm" onclick="window.openNewOrderModal()"><i data-lucide="plus"></i></button>
+    </header>
+
+    <div id="overlay" class="overlay"></div>
+    <nav id="sidebar">
+        <h2 style="padding:0 1rem; margin-bottom:1rem">ERP Fábrica</h2>
+        <a href="index.html"><i data-lucide="layout-dashboard"></i> Visão Geral</a>
+        <a href="orders.html" class="active-link"><i data-lucide="clipboard-list"></i> Pedidos</a>
+        <a href="inventory.html"><i data-lucide="package"></i> Estoque</a>
+        <a href="clients.html"><i data-lucide="users"></i> Clientes</a>
+        <div style="flex:1"></div>
+        <a href="#" id="logoutBtn" class="text-danger"><i data-lucide="log-out"></i> Sair</a>
+    </nav>
+
+    <main>
+        <div class="flex gap-2 mb-4">
+            <button id="tab-active" class="btn btn-primary w-full">Em Andamento</button>
+            <button id="tab-history" class="btn btn-outline w-full">Histórico</button>
+        </div>
+
+        <!-- Barra de Ações em Massa (Inicialmente Oculta) -->
+        <div id="bulk-actions" class="card flex justify-between items-center hidden" style="background: var(--surface-hover); border-color: var(--danger);">
+            <span id="selected-count" class="text-muted">0 selecionados</span>
+            <button id="btn-delete-selected" class="btn btn-sm" style="background: var(--danger); color: white;">
+                <i data-lucide="trash-2"></i> Apagar Selecionados
+            </button>
+        </div>
+
+        <div id="orders-list"></div>
+    </main>
+
+    <!-- Modal Novo Pedido -->
+    <div id="new-order-modal" class="modal">
+        <div class="modal-content">
+            <h3>Novo Pedido</h3>
+            <form id="create-order-form">
+                <!-- Seleção de Cliente -->
+                <div class="mb-4" style="background: var(--surface-hover); padding: 10px; border-radius: var(--radius);">
+                    <div id="existing-client-div">
+                        <label>Cliente</label>
+                        <select id="order-client-select"><option value="">Selecione...</option></select>
+                    </div>
+                    
+                    <div id="new-client-div" class="hidden">
+                        <label>Novo Cliente (Nome)</label>
+                        <input type="text" id="new-client-name" placeholder="Nome do Cliente">
+                        <label>Telefone</label>
+                        <input type="tel" id="new-client-phone" placeholder="(XX) 99999-9999">
+                    </div>
+
+                    <button type="button" id="toggle-new-client" class="btn btn-sm btn-outline w-full mt-2">Cadastrar Novo Cliente</button>
+                </div>
+
+                <label>Prazo de Entrega</label>
+                <input type="date" id="order-deadline" required>
+
+                <hr style="border-color:var(--border); margin: 1rem 0">
+                
+                <!-- Adicionar Itens -->
+                <label>Adicionar Produto</label>
+                <div class="flex gap-2">
+                    <select id="order-product-select" style="flex:2"><option value="">Produto...</option></select>
+                    <input type="number" id="order-qty" placeholder="Qtd" style="flex:1; margin-bottom:8px">
+                </div>
+                <button type="button" class="btn btn-outline btn-sm w-full mb-4" onclick="window.addItemToOrder()">+ Adicionar Item</button>
+
+                <div id="order-items-list" style="margin-bottom: 1rem"></div>
+
+                <!-- Financeiro -->
+                <div class="financial-box mb-4">
+                    <div class="fin-row"><span>Subtotal</span> <span id="calc-subtotal">R$ 0,00</span></div>
+                    
+                    <div class="flex gap-2 mt-2 mb-2 items-center">
+                        <select id="discount-type" style="width:80px; margin:0; font-size:0.8rem">
+                            <option value="fixed">R$</option>
+                            <option value="percent">%</option>
+                        </select>
+                        <input type="number" id="discount-value" placeholder="Desconto" style="margin:0">
+                    </div>
+
+                    <div class="fin-row"><span>Desconto</span> <span id="calc-discount">- R$ 0,00</span></div>
+                    <div class="fin-total"><span>Total Final</span> <span id="calc-total" class="text-primary">R$ 0,00</span></div>
+                </div>
+
+                <div class="flex gap-2">
+                    <button type="button" class="btn btn-outline w-full" onclick="window.closeNewOrderModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary w-full">Criar Pedido</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="./src/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Administrativo - ERP</title>
+    <link rel="stylesheet" href="./src/style.css">
+</head>
+<body class="login-page">
+    <div class="login-box">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h2>ERP Fábrica</h2>
+            <p class="text-muted">Gestão de Produção</p>
+        </div>
+
+        <form id="login-form">
+            <label for="email">E-mail Corporativo</label>
+            <input type="email" id="email" required placeholder="admin@fabrica.com" autocomplete="email">
+            
+            <label for="password">Senha</label>
+            <input type="password" id="password" required placeholder="••••••••" autocomplete="current-password">
+            
+            <button type="submit" class="btn btn-primary w-full mt-4">
+                <i data-lucide="lock"></i> Acessar Sistema
+            </button>
+        </form>
+
+        <p id="error-msg" class="text-danger mt-4" style="text-align:center; display:none; background: rgba(255, 82, 82, 0.1); padding: 10px; border-radius: 4px;"></p>
+
+        <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); text-align: center;">
+            <p class="text-muted" style="font-size: 0.85rem;">
+                <i data-lucide="shield-alert" style="width: 14px; vertical-align: middle;"></i>
+                <strong>Acesso Restrito:</strong> Este sistema não possui cadastro aberto. 
+                Solicite suas credenciais diretamente à gerência.
+            </p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { login, checkSession } from './src/auth.js';
+        import { createIcons, icons } from 'lucide';
+
+        createIcons({ icons });
+        
+        // Verifica se já existe sessão ativa
+        checkSession();
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-msg');
+            const btn = e.target.querySelector('button');
+            
+            try {
+                // Feedback visual de carregamento
+                btn.disabled = true;
+                btn.innerHTML = 'Autenticando...';
+                errorMsg.style.display = 'none';
+                
+                const { user } = await login(email, password);
+                if (user) {
+                    window.location.href = '/index.html';
+                }
+            } catch (error) {
+                console.error(error);
+                errorMsg.innerText = 'Acesso negado. Verifique suas credenciais.';
+                errorMsg.style.display = 'block';
+                btn.disabled = false;
+                btn.innerHTML = '<i data-lucide="lock"></i> Acessar Sistema';
+                createIcons({ icons });
+            }
+        });
+    </script>
+</body>
+</html>
