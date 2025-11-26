@@ -60,7 +60,8 @@
                 
                 const { user } = await login(email, password);
                 if (user) {
-                    window.location.href = '/index.html';
+                    // CORRIGIDO: Removida a barra '/' para funcionar no GitHub Pages sem quebrar o link
+                    window.location.href = 'index.html';
                 }
             } catch (error) {
                 console.error(error);
