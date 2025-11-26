@@ -1,9 +1,13 @@
 import { defineConfig } from 'vite'
-import { resolve } from 'path'
+import { resolve, dirname } from 'path'
+import { fileURLToPath } from 'url'
+
+// Correção necessária para __dirname funcionar em projetos "type": "module"
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 export default defineConfig({
-  // Se o seu repositório chama 'PMCsoftware', mantenha assim.
-  // Se for outro nome, altere abaixo.
+  // Mantenha o nome do repositório correto
   base: '/PMCsoftware/', 
   build: {
     outDir: 'dist',
